@@ -1,0 +1,45 @@
+---
+title: "Data Products Assignment"
+author: "Marcelo Nardelli"
+date: "24/02/2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+This is a slidify presentation for the "Developing Data Products" assignment on week 4. It makes reference to a shiny application developed as part of the assignment. This application user a dataset of airbnb listings in the city of New York and shows two example plots that can be generated using this data. The application can be accessed at https://ganzah.shinyapps.io/DataProductsAssigment/
+
+The airbnb dataset is loaded, preprocessed (NA's are replaced by zeros, listings with outlier prices are removed and only certain columns are select) and two plots are presented: a boxplot of listings prices by neighbourhood group and a boxplot of prices by neighbourhood group and room type.
+
+## Data loading and preprocessing
+
+```{r, warning=FALSE, message=FALSE, size=5, echo=TRUE, out.width=5}
+library(dplyr); library(ggplot2); library(gridExtra); set.seed(20200224)
+data <- read.csv("AB_NYC_2019.csv")
+data <- data %>% as_tibble() %>%
+    select(neighbourhood, neighbourhood_group, room_type, price, number_of_reviews, reviews_per_month) %>% 
+    replace(., is.na(.), 0) %>% filter(price > 0) %>% filter(price <= quantile(data$price, .9))
+glimpse(data)
+head(data)
+```
+
+## Boxplot of listings prices by neighbourhood group
+
+```{r cars, echo = TRUE}
+newData <- data %>% filter(neighbourhood_group %in% c("Bronx", "Brooklyn", "Manhattan", "Queens", "Staten Island"))
+plot1 <- ggplot(data = newData, aes(x = neighbourhood_group, y = price, fill=neighbourhood_group)) + 
+  geom_boxplot() + 
+  labs(title = "Prices by Neighbourhood groups", x = "Neighbourhood groups", y = "Price")
+plot2 <- ggplot(newData, aes(x = room_type, y = price, fill=neighbourhood_group)) + geom_boxplot() +
+  labs(title = "Prices by Neighbourhood groups and Room types", x = "Room types", y = "Price")
+grid.arrange(plot1, plot2)
+```
+
+## Conclusion
+
+The app shows some basic visualizations that can be achieved using the dataset. It showcases both reactive and non-reactive outputs. It also performs preprocessing that results in a dataset that could be used for other purposes (predicting prices, for example)
+
