@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Introduction
 
-This is a slidify presentation for the "Developing Data Products" assignment on week 4. It makes reference to a shiny application developed as part of the assignment. This application user a dataset of airbnb listings in the city of New York and shows two example plots that can be generated using this data. The application can be accessed at https://ganzah.shinyapps.io/DataProductsAssigment/
+This is a slidify presentation for the "Developing Data Products" assignment on week 4. It makes reference to a shiny application developed as part of the assignment. This application user a dataset of airbnb listings in the city of New York and shows two example plots that can be generated using this data. The application can be accessed at https://ganzah.shinyapps.io/DataProductsAssigment/ . Source code for the app and this presentation can be found on github, at https://github.com/ganzah/DataProductsWeek4
 
 The airbnb dataset is loaded, preprocessed (NA's are replaced by zeros, listings with outlier prices are removed and only certain columns are select) and two plots are presented: a boxplot of listings prices by neighbourhood group and a boxplot of prices by neighbourhood group and room type.
 
